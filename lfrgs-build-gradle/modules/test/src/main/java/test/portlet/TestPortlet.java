@@ -3,8 +3,16 @@ package test.portlet;
 import test.constants.TestPortletKeys;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+
+import java.io.IOException;
 
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -27,4 +35,22 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class TestPortlet extends MVCPortlet {
+	
+	@Override
+	public void render(RenderRequest renderRequest, RenderResponse renderResponse)
+			throws IOException, PortletException {
+		// TODO Auto-generated method stub
+		
+		String s=renderRequest.getParameter("licNo");
+	
+		HttpServletRequest httpReq = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(renderRequest));
+		
+		String gs=ParamUtil.get(renderRequest, "licNo","");
+		
+		String fs=httpReq.getParameter("licNo");
+		System.out.println("fs:::"+fs);
+		System.out.println("s:::"+s);
+		System.out.println("gs:::"+gs);
+		super.render(renderRequest, renderResponse);
+	}
 }
